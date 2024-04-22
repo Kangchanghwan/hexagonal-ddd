@@ -7,6 +7,7 @@ import org.example.redisdistributedlock.domain.transaction.TransactionAggregate;
 import org.example.redisdistributedlock.domain.transaction.TransactionHistory;
 import org.example.redisdistributedlock.infra.store.jpa.entity.TransactionEntity;
 import org.example.redisdistributedlock.infra.store.jpa.entity.TransactionRepository;
+import org.example.redisdistributedlock.infra.store.jpa.mapper.TransactionMapper;
 
 public class TransactionCommandAdapter implements TransactionCommandPort {
 
@@ -20,25 +21,11 @@ public class TransactionCommandAdapter implements TransactionCommandPort {
     @Transactional
     public TransactionAggregate persist(TransactionAggregate transaction) {
         TransactionHistory transactionHistory = transaction.getTransactionHistory();
-        TransactionEntity entity = new TransactionEntity(
-            transactionHistory.getId(),
-            transactionHistory.getFrom().getId(),
-            transactionHistory.getTo().getId(),
-            transactionHistory.getAmount(),
-            transactionHistory.getType(),
-            transactionHistory.getStatus(),
-            transactionHistory.getCreateAt()
-        );
+        TransactionEntity entity = TransactionMapper.mapToEntity(transactionHistory);
         TransactionEntity saved = transactionRepository.save(entity);
-        TransactionHistory savedHistory = TransactionHistory.builder()
-            .id(saved.getId())
-            .amount(saved.getAmount())
-            .status(saved.getStatus())
-            .type(saved.getType())
-            .from(TradeableInfo.of(saved.getFrom()))
-            .to(TradeableInfo.of(saved.getTo()))
-            .createAt(saved.getCreateAt())
-            .build();
+        TransactionHistory savedHistory = TransactionMapper.mapToDomain(saved);
         return new TransactionAggregate(savedHistory);
     }
+
+
 }

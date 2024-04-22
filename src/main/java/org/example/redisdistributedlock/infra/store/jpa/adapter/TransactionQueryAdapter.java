@@ -1,11 +1,11 @@
 package org.example.redisdistributedlock.infra.store.jpa.adapter;
 
 import org.example.redisdistributedlock.application.out.TransactionQueryPort;
-import org.example.redisdistributedlock.domain.auth.TradeableInfo;
 import org.example.redisdistributedlock.domain.transaction.TransactionAggregate;
 import org.example.redisdistributedlock.domain.transaction.TransactionHistory;
 import org.example.redisdistributedlock.infra.store.jpa.entity.TransactionEntity;
 import org.example.redisdistributedlock.infra.store.jpa.entity.TransactionRepository;
+import org.example.redisdistributedlock.infra.store.jpa.mapper.TransactionMapper;
 
 public class TransactionQueryAdapter implements TransactionQueryPort {
 
@@ -18,15 +18,9 @@ public class TransactionQueryAdapter implements TransactionQueryPort {
     @Override
     public TransactionAggregate getTransaction(Long id) {
         TransactionEntity entity = transactionRepository.findByIdOrThrow(id);
-        TransactionHistory transactionHistory = TransactionHistory.builder()
-            .id(entity.getId())
-            .amount(entity.getAmount())
-            .status(entity.getStatus())
-            .type(entity.getType())
-            .from(TradeableInfo.of(entity.getFrom()))
-            .to(TradeableInfo.of(entity.getTo()))
-            .createAt(entity.getCreateAt())
-            .build();
+        TransactionHistory transactionHistory = TransactionMapper.mapToDomain(entity);
         return new TransactionAggregate(transactionHistory);
     }
+
+
 }

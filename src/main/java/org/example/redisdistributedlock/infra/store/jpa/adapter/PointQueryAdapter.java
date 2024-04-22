@@ -7,6 +7,7 @@ import org.example.redisdistributedlock.domain.point.PointAggregate;
 import org.example.redisdistributedlock.domain.point.PointHistory;
 import org.example.redisdistributedlock.infra.store.jpa.entity.PointHistoryEntity;
 import org.example.redisdistributedlock.infra.store.jpa.entity.PointHistoryRepository;
+import org.example.redisdistributedlock.infra.store.jpa.mapper.PointMapper;
 
 public class PointQueryAdapter implements PointQueryPort {
     private final PointHistoryRepository pointHistoryRepository;
@@ -17,20 +18,14 @@ public class PointQueryAdapter implements PointQueryPort {
 
     @Override
     public PointAggregate getPoint(Long ownerId) {
-        PointHistoryEntity entity =
-            pointHistoryRepository
+        PointHistoryEntity entity = pointHistoryRepository
             .findByOwnerIdOrderById(ownerId)
             .stream()
             .toList()
             .getLast();
 
-        PointHistory pointHistory = PointHistory.builder()
-            .id(entity.getId())
-            .point(Point.valueOf(entity.getBalance()))
-            .createAt(entity.getCreateAt())
-            .owner(TradeableInfo.of(entity.getOwnerId()))
-            .tranId(entity.getTranId())
-            .build();
+        PointHistory pointHistory = PointMapper.mapToDomain(entity);
         return new PointAggregate(pointHistory);
     }
+
 }
