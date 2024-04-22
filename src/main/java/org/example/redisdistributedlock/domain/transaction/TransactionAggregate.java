@@ -1,14 +1,14 @@
 package org.example.redisdistributedlock.domain.transaction;
 
 import lombok.Getter;
-import org.example.redisdistributedlock.domain.auth.TradeableAuth;
+import org.example.redisdistributedlock.domain.auth.TradeableInfo;
 
 @Getter
 public class TransactionAggregate {
 
     private final TransactionHistory transactionHistory;
 
-    public TransactionAggregate(TradeableAuth from, TradeableAuth to, Long amount, TransactionHistory.Type type) {
+    public TransactionAggregate(TradeableInfo from, TradeableInfo to, Long amount, TransactionHistory.Type type) {
         this.transactionHistory = TransactionHistory.newLog(
             from, to, amount, type
         );

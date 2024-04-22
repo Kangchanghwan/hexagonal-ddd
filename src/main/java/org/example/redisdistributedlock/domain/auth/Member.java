@@ -9,20 +9,29 @@ import java.util.List;
 
 @Getter
 public class Member {
-    private TradeableAuth auth;
+    private Long id;
+    private TradeableInfo tradeableInfo;
+    private DefaultInfo defaultInfo;
 
     @Builder
-    public Member(Long id, List<PointHistory> pointHistories, List<TransactionHistory> transactionHistories) {
-        this.auth =
-            new TradeableAuth(id, pointHistories, transactionHistories);
+    public Member(Long id, List<PointHistory> pointHistories, List<TransactionHistory> transactionHistories, String name) {
+        this.id = id;
+        this.tradeableInfo =
+            new TradeableInfo(id, pointHistories, transactionHistories);
+        this.defaultInfo =
+            new DefaultInfo(name);
     }
 
-    public Member() {
-        this.auth = new TradeableAuth();
+    private Member(String name) {
+        this.defaultInfo = new DefaultInfo(name);
+    }
+
+    public static Member createMember(String name) {
+        return new Member(name);
     }
 
     private Member(Long id) {
-        this.auth = TradeableAuth.of(id);
+        this.id = id;
     }
 
     public static Member of(Long id) {

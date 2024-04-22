@@ -2,7 +2,7 @@ package org.example.redisdistributedlock.infra.store.jpa.adapter;
 
 import jakarta.transaction.Transactional;
 import org.example.redisdistributedlock.application.out.TransactionCommandPort;
-import org.example.redisdistributedlock.domain.auth.TradeableAuth;
+import org.example.redisdistributedlock.domain.auth.TradeableInfo;
 import org.example.redisdistributedlock.domain.transaction.TransactionAggregate;
 import org.example.redisdistributedlock.domain.transaction.TransactionHistory;
 import org.example.redisdistributedlock.infra.store.jpa.entity.TransactionEntity;
@@ -35,8 +35,8 @@ public class TransactionCommandAdapter implements TransactionCommandPort {
             .amount(saved.getAmount())
             .status(saved.getStatus())
             .type(saved.getType())
-            .from(TradeableAuth.of(saved.getFrom()))
-            .to(TradeableAuth.of(saved.getTo()))
+            .from(TradeableInfo.of(saved.getFrom()))
+            .to(TradeableInfo.of(saved.getTo()))
             .createAt(saved.getCreateAt())
             .build();
         return new TransactionAggregate(savedHistory);

@@ -22,7 +22,7 @@ public class PointEventHandler {
 
     @EventListener
     public void JoinEventHandler(JoinEvent joinEvent) {
-        pointService.init(joinEvent.getMember().getAuth());
+        pointService.init(joinEvent.getMember().getTradeableInfo());
     }
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)

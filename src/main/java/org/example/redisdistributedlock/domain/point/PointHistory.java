@@ -2,7 +2,7 @@ package org.example.redisdistributedlock.domain.point;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.example.redisdistributedlock.domain.auth.TradeableAuth;
+import org.example.redisdistributedlock.domain.auth.TradeableInfo;
 
 import java.time.LocalDateTime;
 
@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 public class PointHistory {
 
     private Long id;
-    private final TradeableAuth owner;
+    private final TradeableInfo owner;
     private final Long tranId;
     private final Point point;
     private final LocalDateTime createAt;
 
 
-    private PointHistory(TradeableAuth owner, Long tranId, Point point, LocalDateTime createAt) {
+    private PointHistory(TradeableInfo owner, Long tranId, Point point, LocalDateTime createAt) {
         this.owner = owner;
         this.tranId = tranId;
         this.point = point;
@@ -24,7 +24,7 @@ public class PointHistory {
     }
 
     @Builder
-    public PointHistory(TradeableAuth owner, Long tranId, Point point, LocalDateTime createAt, Long id) {
+    public PointHistory(TradeableInfo owner, Long tranId, Point point, LocalDateTime createAt, Long id) {
         this.owner = owner;
         this.tranId = tranId;
         this.point = point;
@@ -32,7 +32,7 @@ public class PointHistory {
         this.id = id;
     }
 
-    public static PointHistory newLog(TradeableAuth owner, Point point, Long tranId) {
+    public static PointHistory newLog(TradeableInfo owner, Point point, Long tranId) {
         return new PointHistory(owner, tranId, point, LocalDateTime.now());
     }
 

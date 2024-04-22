@@ -1,7 +1,7 @@
 package org.example.redisdistributedlock.infra.store.jpa.adapter;
 
 import org.example.redisdistributedlock.application.out.PointQueryPort;
-import org.example.redisdistributedlock.domain.auth.TradeableAuth;
+import org.example.redisdistributedlock.domain.auth.TradeableInfo;
 import org.example.redisdistributedlock.domain.point.Point;
 import org.example.redisdistributedlock.domain.point.PointAggregate;
 import org.example.redisdistributedlock.domain.point.PointHistory;
@@ -28,7 +28,7 @@ public class PointQueryAdapter implements PointQueryPort {
             .id(entity.getId())
             .point(Point.valueOf(entity.getBalance()))
             .createAt(entity.getCreateAt())
-            .owner(TradeableAuth.of(entity.getOwnerId()))
+            .owner(TradeableInfo.of(entity.getOwnerId()))
             .tranId(entity.getTranId())
             .build();
         return new PointAggregate(pointHistory);

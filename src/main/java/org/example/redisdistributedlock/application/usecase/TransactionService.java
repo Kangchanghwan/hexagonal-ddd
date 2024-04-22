@@ -34,8 +34,8 @@ public class TransactionService implements TransactionUseCase {
 
         TransactionAggregate tranAggregate =
             new TransactionAggregate(
-                fromMember.getAuth(),
-                toMember.getAuth(),
+                fromMember.getTradeableInfo(),
+                toMember.getTradeableInfo(),
                 amount,
                 TransactionHistory.Type.WIRE
             );

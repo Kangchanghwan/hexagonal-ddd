@@ -15,7 +15,10 @@ public class MemberCommandAdapter implements MemberCommandPort {
 
     @Override
     public Member persist(Member member) {
-        MemberEntity entity = new MemberEntity(member.getAuth().getId());
+        MemberEntity entity =
+            new MemberEntity(
+                member.getId(),
+                member.getDefaultInfo().getName());
         memberRepository.save(entity);
         return Member.builder()
             .id(entity.getId())

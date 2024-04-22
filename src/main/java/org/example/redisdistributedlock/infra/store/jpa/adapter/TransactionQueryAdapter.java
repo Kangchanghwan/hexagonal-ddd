@@ -1,7 +1,7 @@
 package org.example.redisdistributedlock.infra.store.jpa.adapter;
 
 import org.example.redisdistributedlock.application.out.TransactionQueryPort;
-import org.example.redisdistributedlock.domain.auth.TradeableAuth;
+import org.example.redisdistributedlock.domain.auth.TradeableInfo;
 import org.example.redisdistributedlock.domain.transaction.TransactionAggregate;
 import org.example.redisdistributedlock.domain.transaction.TransactionHistory;
 import org.example.redisdistributedlock.infra.store.jpa.entity.TransactionEntity;
@@ -23,8 +23,8 @@ public class TransactionQueryAdapter implements TransactionQueryPort {
             .amount(entity.getAmount())
             .status(entity.getStatus())
             .type(entity.getType())
-            .from(TradeableAuth.of(entity.getFrom()))
-            .to(TradeableAuth.of(entity.getTo()))
+            .from(TradeableInfo.of(entity.getFrom()))
+            .to(TradeableInfo.of(entity.getTo()))
             .createAt(entity.getCreateAt())
             .build();
         return new TransactionAggregate(transactionHistory);

@@ -1,7 +1,7 @@
 package org.example.redisdistributedlock.domain.point;
 
 import lombok.Getter;
-import org.example.redisdistributedlock.domain.auth.TradeableAuth;
+import org.example.redisdistributedlock.domain.auth.TradeableInfo;
 
 @Getter
 public class PointAggregate {
@@ -12,7 +12,7 @@ public class PointAggregate {
         this.history = history;
     }
 
-    public static PointHistory init(TradeableAuth member){
+    public static PointHistory init(TradeableInfo member){
         return PointHistory.newLog(member, Point.ZERO, null);
     }
 

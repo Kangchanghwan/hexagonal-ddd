@@ -15,7 +15,7 @@ public class AdminCommandAdapter implements AdminCommandPort {
 
     @Override
     public void persist(Admin admin) {
-        AdminEntity entity = new AdminEntity(admin.getAuth().getId());
+        AdminEntity entity = new AdminEntity(admin.getTradeableInfo().getId());
         adminRepository.save(entity);
     }
 }

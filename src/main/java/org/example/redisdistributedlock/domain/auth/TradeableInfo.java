@@ -10,25 +10,25 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class TradeableAuth implements Tradeable, Identifier {
+public class TradeableInfo implements Tradeable{
 
     private Long id;
 
     private List<PointHistory> pointHistories = new ArrayList<>();
     private List<TransactionHistory> transactionHistories = new ArrayList<>();
 
-    private TradeableAuth(Long id) {
+    private TradeableInfo(Long id) {
         this.id = id;
     }
 
-    public TradeableAuth(Long id, List<PointHistory> pointHistories, List<TransactionHistory> transactionHistories) {
+    public TradeableInfo(Long id, List<PointHistory> pointHistories, List<TransactionHistory> transactionHistories) {
         this.id = id;
         this.pointHistories = pointHistories;
         this.transactionHistories = transactionHistories;
     }
 
-    public static TradeableAuth of(Long id) {
-        return new TradeableAuth(id);
+    public static TradeableInfo of(Long id) {
+        return new TradeableInfo(id);
     }
 
 }

@@ -19,8 +19,8 @@ public class MemberService implements MemberUseCase {
 
     @Override
     @Transactional
-    public void join() {
-        Member member = new Member();
+    public void join(String name) {
+        Member member = Member.createMember(name);
         member = memberCommandPort.persist(member);
         Events.raise(new JoinEvent(member));
     }

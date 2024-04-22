@@ -2,8 +2,7 @@ package org.example.redisdistributedlock.domain.transaction;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.example.redisdistributedlock.domain.auth.TradeableAuth;
-import org.example.redisdistributedlock.domain.point.Point;
+import org.example.redisdistributedlock.domain.auth.TradeableInfo;
 
 import java.time.LocalDateTime;
 
@@ -11,8 +10,8 @@ import java.time.LocalDateTime;
 @Getter
 public class TransactionHistory {
     private Long id;
-    private final TradeableAuth to;
-    private final TradeableAuth from;
+    private final TradeableInfo to;
+    private final TradeableInfo from;
     private final Long amount;
 
     private final Type type;
@@ -26,7 +25,7 @@ public class TransactionHistory {
         READY, SUCCESS, FAIL
     }
 
-    private TransactionHistory(TradeableAuth to, TradeableAuth from, Long amount, Type type, Status status) {
+    private TransactionHistory(TradeableInfo to, TradeableInfo from, Long amount, Type type, Status status) {
         this.to = to;
         this.from = from;
         this.amount = amount;
@@ -36,7 +35,7 @@ public class TransactionHistory {
     }
 
     @Builder
-    public TransactionHistory(Long id, TradeableAuth to, TradeableAuth from, Long amount, Type type, Status status, LocalDateTime createAt) {
+    public TransactionHistory(Long id, TradeableInfo to, TradeableInfo from, Long amount, Type type, Status status, LocalDateTime createAt) {
         this.id = id;
         this.to = to;
         this.from = from;
@@ -46,7 +45,7 @@ public class TransactionHistory {
         this.createAt = createAt;
     }
 
-    public static TransactionHistory newLog(TradeableAuth from, TradeableAuth to, Long amount, Type type) {
+    public static TransactionHistory newLog(TradeableInfo from, TradeableInfo to, Long amount, Type type) {
         return new TransactionHistory(to, from, amount, type, Status.READY);
     }
     public void success(){
